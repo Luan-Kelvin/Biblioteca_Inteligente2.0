@@ -11,14 +11,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     @Column(nullable = false)
@@ -27,7 +28,11 @@ public class Profile {
     @Column(nullable = false)
     private String adress;
 
-    public Profile(String cpf, String telephone, String adress) {
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    public Profile(String cpf, String telephone, String adress, User user) {
         this.cpf = cpf;
         this.telephone = telephone;
         this.adress = adress;

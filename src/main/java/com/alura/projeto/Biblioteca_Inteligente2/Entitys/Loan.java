@@ -13,11 +13,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     private LocalDate loanDate = LocalDate.now();
@@ -25,11 +26,24 @@ public class Loan {
     @Column(nullable = false)
     private LocalDate shceduledDate;
 
+    private LocalDate returnDate;
+
     private String status = "EMPRESTADO";
 
-    public Loan(LocalDate loanDate, LocalDate shceduledDate, String status) {
+    @ManyToOne()
+    @JoinColumn(name = "id_book")
+    private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+    public Loan(LocalDate loanDate, LocalDate shceduledDate, LocalDate returnDate, String status, Book book, User user) {
         this.loanDate = loanDate;
         this.shceduledDate = shceduledDate;
         this.status = status;
+        this.returnDate = returnDate;
+        this.book = book;
+        this.user = user;
     }
 }
