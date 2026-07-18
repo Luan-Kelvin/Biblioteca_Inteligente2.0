@@ -45,5 +45,8 @@ public class Loan {
         this.returnDate = returnDate;
         this.book = book;
         this.user = user;
+
+        book.addLoan(this);
+        user.addLoan(this);
     }
 }

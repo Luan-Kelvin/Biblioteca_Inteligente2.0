@@ -36,5 +36,10 @@ public class Profile {
         this.cpf = cpf;
         this.telephone = telephone;
         this.adress = adress;
+        this.user = user;
+
+        if(user != null){
+            user.setProfile(this);
+        }
     }
 }

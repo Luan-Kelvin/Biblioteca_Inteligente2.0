@@ -60,12 +60,43 @@ public class Book {
     @ManyToMany(mappedBy = "favoritos")
     List<User> userWhoFavorited = new ArrayList<>();
 
-    public Book(String title, String isbn, String descricao, LocalDate dataPublicacao, Double preco, Integer estoque) {
+    public Book(String title, String isbn, String descricao, LocalDate dataPublicacao, Publisher publisher, Double preco, Integer estoque) {
         this.title = title;
         this.isbn = isbn;
         this.descricao = descricao;
         this.dataPublicacao = dataPublicacao;
         this.preco = preco;
         this.estoque = estoque;
+
+        associatePublisher(publisher);
     }
+
+    public void addCategoriy(Category category){
+        if(!categories.contains(category)){
+            categories.add(category);
+        }
+
+        if (!category.getBooks().contains(this)){
+            category.getBooks().add(this);
+        }
+    }
+
+    public void addLoan(Loan loan){
+        if(!loans.contains(loan)){
+            loans.add(loan);
+        }
+    }
+
+    public void associatePublisher(Publisher publisher){
+        if (publisher == null){
+            return;
+        }
+
+        this.publisher = publisher;
+
+        if (!publisher.getBooks().contains(this)){
+            publisher.addBook(this);
+        }
+    }
+
 }

@@ -44,4 +44,14 @@ public class Author {
         this.country = country;
         this.dateOfBirth = dateOfBirth;
     }
+
+    public void addBook(Book book){
+        if (book == null){
+            return;
+        }
+
+        if (books.add(book)){
+            book.getAuthors().add(this);
+        }
+    }
 }

@@ -35,4 +35,18 @@ public class Publisher {
         this.name = name;
         this.city = city;
     }
+
+    public void addBook(Book book){
+        if(book == null){
+            return;
+        }
+
+        if(!books.contains(book)){
+            books.add(book);
+        }
+
+        if(book.getPublisher() != this){
+            book.setPublisher(this);
+        }
+    }
 }
