@@ -13,15 +13,15 @@ import java.net.http.HttpResponse;
 @Service
 public class ConsumeApi {
     private ObjectMapper mapper = new ObjectMapper();
-    private static final String adress = "https://openlibrary.org/search.json?title=dom+casmurro";
+    private static final String adress = "https://openlibrary.org/search.json?title=";
 
-    public DocsBook consumeApi(){
+    public DocsBook consumeApi(String title){
         HttpClient client = HttpClient.newHttpClient();
 
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create(adress))
+                    .uri(URI.create(adress+title.replace(" ", "+").trim().toLowerCase()))
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
