@@ -21,6 +21,6 @@ public record BookDTO(
 
          List<CategoryDTO> categories,
 
-         List<AuthroDTO> authors
+         List<AuthorDTO> authors
 ) {
 }

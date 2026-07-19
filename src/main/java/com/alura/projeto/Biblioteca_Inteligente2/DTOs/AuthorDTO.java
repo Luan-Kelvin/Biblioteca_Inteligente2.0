@@ -3,7 +3,7 @@ package com.alura.projeto.Biblioteca_Inteligente2.DTOs;
 import java.time.LocalDate;
 import java.util.List;
 
-public record AuthroDTO(
+public record AuthorDTO(
          Long id,
 
          String name,
@@ -12,6 +12,6 @@ public record AuthroDTO(
 
          LocalDate dateOfBirth,
 
-         List<BookDTO> books
+         List<String> books
 ) {
 }
