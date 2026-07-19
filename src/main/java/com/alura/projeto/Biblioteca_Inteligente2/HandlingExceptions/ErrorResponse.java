@@ -7,6 +7,6 @@ public record ErrorResponse(
         int status,
         String erro,
         String mensage,
-        String cmainho
+        String caminho
 ) {
 }

@@ -1,6 +1,7 @@
 package com.alura.projeto.Biblioteca_Inteligente2.API.ApiService;
 
 import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.DocsBook;
+import com.alura.projeto.Biblioteca_Inteligente2.Request.ApiExternaException;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
@@ -27,7 +28,7 @@ public class ConsumeApi {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200){
-                throw new RuntimeException("Erro ao consumir API: "+response.statusCode());
+                throw new ApiExternaException("Erro ao consumir API: "+response.statusCode());
             }
 
             return mapper.readValue(response.body(), DocsBook.class);
