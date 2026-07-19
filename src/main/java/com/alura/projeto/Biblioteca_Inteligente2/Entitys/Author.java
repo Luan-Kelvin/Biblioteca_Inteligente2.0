@@ -23,7 +23,6 @@ public class Author {
     @Column(nullable = false)
     private String name;
 
-
     private String country;
 
     private LocalDate dateOfBirth;

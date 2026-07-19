@@ -1,7 +1,7 @@
 package com.alura.projeto.Biblioteca_Inteligente2.API.ApiService;
 
 import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.DocsBook;
-import com.alura.projeto.Biblioteca_Inteligente2.Request.ApiExternaException;
+import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.ApiExternaException;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 

@@ -1,6 +1,6 @@
 package com.alura.projeto.Biblioteca_Inteligente2.HandlingExceptions;
 
-import com.alura.projeto.Biblioteca_Inteligente2.Request.*;
+import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
