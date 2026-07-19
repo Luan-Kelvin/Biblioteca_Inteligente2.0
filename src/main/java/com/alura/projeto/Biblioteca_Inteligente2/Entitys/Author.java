@@ -1,10 +1,7 @@
 package com.alura.projeto.Biblioteca_Inteligente2.Entitys;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public class Author {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+
     private String country;
 
     private LocalDate dateOfBirth;
@@ -39,6 +36,7 @@ public class Author {
     )
     private List<Book> books = new ArrayList<>();
 
+    @Builder
     public Author(String name, String country, LocalDate dateOfBirth) {
         this.name = name;
         this.country = country;

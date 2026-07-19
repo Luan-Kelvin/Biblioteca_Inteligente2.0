@@ -1,12 +1,8 @@
 package com.alura.projeto.Biblioteca_Inteligente2.Entitys;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.swing.text.EditorKit;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +23,13 @@ public class Book {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, unique = true)
-    private String isbn;
-
     private String descricao;
 
-    private LocalDate dataPublicacao;
+    private Integer yearOfPublication;
 
-    @Column(nullable = false)
-    private Double preco;
+    private Double price;
 
-    private Integer estoque = 0;
+    private Integer estoque;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_publisher")
@@ -60,12 +52,12 @@ public class Book {
     @ManyToMany(mappedBy = "favoritos")
     List<User> userWhoFavorited = new ArrayList<>();
 
-    public Book(String title, String isbn, String descricao, LocalDate dataPublicacao, Publisher publisher, Double preco, Integer estoque) {
+    @Builder
+    public Book(String title, String descricao, Integer yearOfPublication, Publisher publisher, Double price, Integer estoque) {
         this.title = title;
-        this.isbn = isbn;
         this.descricao = descricao;
-        this.dataPublicacao = dataPublicacao;
-        this.preco = preco;
+        this.yearOfPublication = yearOfPublication;
+        this.price = price;
         this.estoque = estoque;
 
         associatePublisher(publisher);
