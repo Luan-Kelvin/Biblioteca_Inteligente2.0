@@ -17,7 +17,7 @@ public record BookDTO(
 
          Integer estoque,
 
-         Publisher publisher,
+         String publisher,
 
          List<CategoryDTO> categories,
 

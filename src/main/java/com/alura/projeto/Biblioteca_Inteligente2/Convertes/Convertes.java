@@ -35,7 +35,7 @@ public class Convertes {
                 book.getYearOfPublication(),
                 book.getPrice(),
                 book.getEstoque(),
-                book.getPublisher(),
+                book.getPublisher().getName(),
                 categoriesDTO,
                 authorsDTO
         );
