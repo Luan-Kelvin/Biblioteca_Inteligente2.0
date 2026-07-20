@@ -3,7 +3,6 @@ package com.alura.projeto.Biblioteca_Inteligente2.Entitys;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,7 @@ public class Book {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "book_and_category",
+            schema = "smartlibrary",
             joinColumns = @JoinColumn(name = "id_book"),
             inverseJoinColumns = @JoinColumn(name = "id_category")
     )

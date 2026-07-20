@@ -3,6 +3,7 @@ package com.alura.projeto.Biblioteca_Inteligente2.Service;
 import com.alura.projeto.Biblioteca_Inteligente2.Convertes.Convertes;
 import com.alura.projeto.Biblioteca_Inteligente2.DTOs.BookDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Book;
+import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.LivroNaoEncontradoException;
 import com.alura.projeto.Biblioteca_Inteligente2.Repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -28,6 +29,39 @@ public class BookService {
             return List.of();
         }
 
+       return returnListDto(books);
+    }
+
+    public BookDTO searchById(Long id){
+        Book book = bookRepository.findById(id).orElseThrow(() ->  new LivroNaoEncontradoException("Erro! livro com id = "+id+" não foi encontrado."));
+
+        return convertes.converterBook(book);
+    }
+
+    public List<BookDTO> searchByTitle(String title){
+        List<Book> book = bookRepository.searchBookByTitle(title);
+
+        if (book.isEmpty()){
+            logger.info("Nenhum livro com "+title+" foi encontrado.");
+            throw new LivroNaoEncontradoException("Erro! Livro com titulo "+title+" não foi encontrado.");
+        }
+
+        return returnListDto(book);
+    }
+
+    public List<BookDTO> searchByCategory(String categoria){
+        List<Book> books = bookRepository.searchBookByCategory(categoria);
+
+        if (books.isEmpty()){
+            logger.info("Livros com categoria "+categoria+" não foram encontrados.");
+            return List.of();
+        }
+
+        return  returnListDto(books);
+    }
+
+
+    public List<BookDTO> returnListDto(List<Book> books){
         List<BookDTO> dtos = new ArrayList<>();
 
         books.forEach(b -> {
