@@ -42,4 +42,9 @@ public class BookController {
         return bookService.searchByAuthor(autor);
     }
 
+    @GetMapping("/editora/{editora}")
+    public List<BookDTO> searchByPublisher(@PathVariable String editora){
+        return bookService.serachByPublisher(editora);
+    }
+
 }

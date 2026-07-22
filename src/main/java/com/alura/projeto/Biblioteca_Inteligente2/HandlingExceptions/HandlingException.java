@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @RestControllerAdvice
 public class HandlingException {
@@ -111,6 +112,20 @@ public class HandlingException {
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "categoria não foi encontrada",
+                e.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+     }
+
+     @ExceptionHandler(EditoraNaoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> publisherNotFound(EditoraNaoEncontradaException e, HttpServletRequest request){
+
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                "Editora não foi encontrada.",
                 e.getMessage(),
                 request.getRequestURI()
         );
