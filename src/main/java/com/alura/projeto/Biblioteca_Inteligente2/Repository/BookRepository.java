@@ -12,6 +12,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findById(Long id);
 
+    Optional<Book> findByTitleIgnoreCase(String title);
+
     @Query("""
             SELECT b
             FROM Book b

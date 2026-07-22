@@ -4,13 +4,17 @@ import com.alura.projeto.Biblioteca_Inteligente2.API.ApiService.ConsumeApi;
 import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.BookApiExternaDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.DocsBook;
 import com.alura.projeto.Biblioteca_Inteligente2.Convertes.Convertes;
+import com.alura.projeto.Biblioteca_Inteligente2.DTOs.AuthorDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.DTOs.BookDTO;
+import com.alura.projeto.Biblioteca_Inteligente2.DTOs.CategoryDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Author;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Book;
+import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Category;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Publisher;
 import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.*;
 import com.alura.projeto.Biblioteca_Inteligente2.Repository.AuthorRepository;
 import com.alura.projeto.Biblioteca_Inteligente2.Repository.BookRepository;
+import com.alura.projeto.Biblioteca_Inteligente2.Repository.CategoryRepository;
 import com.alura.projeto.Biblioteca_Inteligente2.Repository.PublisherReposirtory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +34,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final PublisherReposirtory publisherReposirtory;
+    private final CategoryRepository categoryRepository;
     private final ConsumeApi consumeApi;
     private final Convertes convertes;
 
@@ -126,6 +132,30 @@ public class BookService {
         return result;
     }
 
+    public BookDTO registerABook(BookDTO bookDTO){
+        Optional<Book> bookRep = bookRepository.findByTitleIgnoreCase(bookDTO.title());
+        Publisher publisher = publisherReposirtory.findByNameIgnoreCase(bookDTO.publisher())
+                .orElseGet(() -> {
+                    Publisher p = new Publisher(bookDTO.publisher(), "Não informado");
+                    logger.info("Autor {} salvo com sucesso!", p.getName());
+                    return publisherReposirtory.save(p);
+                });
+
+        if (bookRep.isPresent()){
+            throw new LivroJaExisteException("Erro! Livro "+bookDTO.title()+" ja esta cadastrado.");
+        }
+
+        Book book = convertes.converterBookDTO(bookDTO, publisher);
+
+        bookRepository.save(book);
+        logger.info("Livro {} salvo com sucesso!", book.getTitle());
+
+        checkAuthors(bookDTO.authors(), book);
+        checkCategories(bookDTO.categories(), book);
+
+
+        return convertes.converterBook(book);
+    }
 
     public List<BookDTO> returnListDto(List<Book> books){
         List<BookDTO> dtos = new ArrayList<>();
@@ -135,5 +165,32 @@ public class BookService {
         });
 
         return dtos;
+    }
+
+    public void checkAuthors(List<AuthorDTO> authorDTOS, Book book){
+        authorDTOS.forEach(ad -> {
+            Author a = authorRepository.findByNameIgnoreCase(ad.name())
+                    .orElseGet(() -> {
+                        Author author = convertes.converterAuthorDTO(ad);
+                        logger.info("Autor {} salvo com sucesso!", author.getName());
+                        return authorRepository.save(author);
+                    });
+            book.addAuthor(a);
+
+        });
+    }
+
+    public void checkCategories(List<CategoryDTO> categoryDTOS, Book book){
+        categoryDTOS.forEach(cd -> {
+            Category c = categoryRepository.findByNameIgnoreCase(cd.name())
+                    .orElseGet(() -> {
+                        Category category = convertes.converterCategoryDTO(cd);
+                        logger.info("Categoria {} salvo com sucesso!", category.getName());
+                        return categoryRepository.save(category);
+                    });
+
+
+            book.addCategoriy(c);
+        });
     }
 }

@@ -6,9 +6,11 @@ import com.alura.projeto.Biblioteca_Inteligente2.DTOs.CategoryDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Author;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Book;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Category;
+import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Publisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,6 @@ public class Convertes {
         });
 
         return new BookDTO(
-                book.getId(),
                 book.getTitle(),
                 book.getDescricao(),
                 book.getYearOfPublication(),
@@ -42,7 +43,7 @@ public class Convertes {
     }
 
     public CategoryDTO converterCategory(Category category){
-        return new CategoryDTO(category.getId(), category.getName());
+        return new CategoryDTO(category.getName());
     }
 
     public AuthorDTO converterAuthor(Author author){
@@ -53,11 +54,34 @@ public class Convertes {
         });
 
         return new AuthorDTO(
-                author.getId(),
                 author.getName(),
                 author.getCountry(),
                 author.getDateOfBirth(),
                 booksName
         );
+    }
+
+    public Book converterBookDTO(BookDTO bookDTO, Publisher publisher){
+        return new Book(
+                bookDTO.title(),
+                bookDTO.descricao(),
+                bookDTO.yearOfPublication(),
+                publisher,
+                bookDTO.price(),
+                bookDTO.estoque()
+        );
+    }
+
+    public Author converterAuthorDTO(AuthorDTO authorDTO){
+
+        return new Author(
+                authorDTO.name(),
+                authorDTO.country(),
+                authorDTO.dateOfBirth()
+        );
+    }
+
+    public Category converterCategoryDTO(CategoryDTO categoryDTO){
+        return new Category(categoryDTO.name());
     }
 }

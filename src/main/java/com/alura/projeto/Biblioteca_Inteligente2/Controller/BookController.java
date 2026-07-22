@@ -4,10 +4,7 @@ import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.BookApiExternaDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.DTOs.BookDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.Service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,6 +53,12 @@ public class BookController {
     @GetMapping("/importar/{title}")
     public BookApiExternaDTO searchForBookExternalAPIs(@PathVariable String title){
         return bookService.searchForBookExternalAPIs(title);
+    }
+
+    // POST
+    @PostMapping
+    public BookDTO registerABook(@RequestBody BookDTO bookDTO){
+        return bookService.registerABook(bookDTO);
     }
 
 }

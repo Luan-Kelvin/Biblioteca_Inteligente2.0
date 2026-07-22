@@ -132,4 +132,18 @@ public class HandlingException {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
      }
+
+     @ExceptionHandler(LivroJaExisteException.class)
+    public ResponseEntity<ErrorResponse> theBookAlready(LivroJaExisteException e, HttpServletRequest request){
+
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Conlito, Livro existente no banco.",
+                e.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+     }
 }

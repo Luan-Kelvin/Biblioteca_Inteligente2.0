@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record AuthorDTO(
-         Long id,
-
          String name,
 
          String country,
