@@ -1,14 +1,14 @@
 package com.alura.projeto.Biblioteca_Inteligente2.Service;
 
+import com.alura.projeto.Biblioteca_Inteligente2.API.ApiService.ConsumeApi;
+import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.BookApiExternaDTO;
+import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.DocsBook;
 import com.alura.projeto.Biblioteca_Inteligente2.Convertes.Convertes;
 import com.alura.projeto.Biblioteca_Inteligente2.DTOs.BookDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Author;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Book;
 import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Publisher;
-import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.AutorNaoEncontradoException;
-import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.AutorSemLivrosException;
-import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.EditoraNaoEncontradaException;
-import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.LivroNaoEncontradoException;
+import com.alura.projeto.Biblioteca_Inteligente2.Excepetion.*;
 import com.alura.projeto.Biblioteca_Inteligente2.Repository.AuthorRepository;
 import com.alura.projeto.Biblioteca_Inteligente2.Repository.BookRepository;
 import com.alura.projeto.Biblioteca_Inteligente2.Repository.PublisherReposirtory;
@@ -29,6 +29,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final PublisherReposirtory publisherReposirtory;
+    private final ConsumeApi consumeApi;
     private final Convertes convertes;
 
     public List<BookDTO> listBooks(){
@@ -100,6 +101,29 @@ public class BookService {
         }
 
         return returnListDto(books);
+    }
+
+    public List<BookDTO> checkAvaliableBooks(){
+        List<Book> books = bookRepository.checkAvaliableBooks();
+
+        if (books.isEmpty()){
+            logger.info("Não tem nenhum livro com estoque disponível no momento");
+            return List.of();
+        }
+
+        return returnListDto(books);
+    }
+
+    public BookApiExternaDTO searchForBookExternalAPIs(String title){
+        DocsBook docsBook = consumeApi.consumeApi(title);
+
+        if (docsBook.docs().isEmpty()){
+            throw new ApiExternaException("Erro! ocorreu um erro na Api Externa.");
+        }
+
+        BookApiExternaDTO result = docsBook.docs().get(0);
+
+        return result;
     }
 
 

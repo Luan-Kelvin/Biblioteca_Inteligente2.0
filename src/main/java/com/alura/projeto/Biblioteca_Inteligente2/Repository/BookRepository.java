@@ -41,4 +41,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             WHERE LOWER(p.name) ILIKE LOWER(:namePublisher)
             """)
     List<Book> serachByPublisher(@Param("namePublisher") String namePublisher);
+
+    @Query("""
+            SELECT b
+            FROM Book b
+            WHERE b.estoque > 0
+            """)
+    List<Book> checkAvaliableBooks();
 }

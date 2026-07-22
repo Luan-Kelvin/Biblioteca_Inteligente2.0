@@ -1,5 +1,6 @@
 package com.alura.projeto.Biblioteca_Inteligente2.Controller;
 
+import com.alura.projeto.Biblioteca_Inteligente2.API.DTO.BookApiExternaDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.DTOs.BookDTO;
 import com.alura.projeto.Biblioteca_Inteligente2.Service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,16 @@ public class BookController {
     @GetMapping("/editora/{editora}")
     public List<BookDTO> searchByPublisher(@PathVariable String editora){
         return bookService.serachByPublisher(editora);
+    }
+
+    @GetMapping("/disponiveis")
+    public List<BookDTO> checkAvailableBooks(){
+        return bookService.checkAvaliableBooks();
+    }
+
+    @GetMapping("/importar/{title}")
+    public BookApiExternaDTO searchForBookExternalAPIs(@PathVariable String title){
+        return bookService.searchForBookExternalAPIs(title);
     }
 
 }

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record APISeacrhResult(
+public record BookApiExternaDTO(
         @JsonAlias("author_name") List<String> nameAuthors,
         @JsonAlias("first_publish_year") Integer yearOfPublication,
         @JsonAlias("title") String title

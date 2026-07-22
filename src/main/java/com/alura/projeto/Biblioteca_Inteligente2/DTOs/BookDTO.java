@@ -1,7 +1,5 @@
 package com.alura.projeto.Biblioteca_Inteligente2.DTOs;
 
-import com.alura.projeto.Biblioteca_Inteligente2.Entitys.Publisher;
-
 import java.util.List;
 
 public record BookDTO(
