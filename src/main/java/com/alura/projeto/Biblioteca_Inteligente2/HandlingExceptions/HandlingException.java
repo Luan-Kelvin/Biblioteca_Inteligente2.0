@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @RestControllerAdvice
 public class HandlingException {
@@ -15,7 +17,7 @@ public class HandlingException {
     @ExceptionHandler(LivroNaoEncontradoException.class)
     public ResponseEntity<ErrorResponse> HandleBookNotFound(LivroNaoEncontradoException e, HttpServletRequest request){
         ErrorResponse erro  = new ErrorResponse(
-                LocalDate.now(),
+                LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "Livro não encontrado",
                 e.getMessage(),
@@ -30,7 +32,7 @@ public class HandlingException {
     public ResponseEntity<ErrorResponse> HandleAuthorNotFound(AutorNaoEncontradoException e, HttpServletRequest request){
 
         ErrorResponse erro = new ErrorResponse(
-                LocalDate.now(),
+                LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "Autor não encontrado",
                 e.getMessage(),
@@ -46,7 +48,7 @@ public class HandlingException {
     public ResponseEntity<ErrorResponse> UserNotFound(UsuarioNaoEncontradoException e, HttpServletRequest request){
 
         ErrorResponse error = new ErrorResponse(
-                LocalDate.now(),
+                LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "Usúario não foi encontrado.",
                 e.getMessage(),
@@ -61,7 +63,7 @@ public class HandlingException {
     public ResponseEntity<ErrorResponse> insuficcientStock(EstoqueInsuficienteException e, HttpServletRequest request){
 
         ErrorResponse error = new ErrorResponse(
-                LocalDate.now(),
+                LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 "Saldo insuficiente.",
                 e.getMessage(),
@@ -76,7 +78,7 @@ public class HandlingException {
     public ResponseEntity<ErrorResponse> BookAlreadyLentOut(LivroJaEmprestadoException e, HttpServletRequest request){
 
         ErrorResponse error = new ErrorResponse(
-                LocalDate.now(),
+                LocalDateTime.now(),
                 HttpStatus.CONFLICT.value(),
                 "Livro ja foi emprestado a esse usuário",
                 e.getMessage(),
@@ -91,7 +93,7 @@ public class HandlingException {
     public ResponseEntity<ErrorResponse> externalAPIError(ApiExternaException e, HttpServletRequest request){
 
         ErrorResponse error = new ErrorResponse(
-                LocalDate.now(),
+                LocalDateTime.now(),
                 HttpStatus.BAD_GATEWAY.value(),
                 "Erro na APi Externa",
                 e.getMessage(),
@@ -106,7 +108,7 @@ public class HandlingException {
     public ResponseEntity<ErrorResponse> categoryNotFound(CategoriaNaoEncontradaException e, HttpServletRequest request){
 
         ErrorResponse error = new ErrorResponse(
-                LocalDate.now(),
+                LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
                 "categoria não foi encontrada",
                 e.getMessage(),

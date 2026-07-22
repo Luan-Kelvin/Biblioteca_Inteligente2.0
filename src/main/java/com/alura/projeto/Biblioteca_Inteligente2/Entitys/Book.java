@@ -73,6 +73,20 @@ public class Book {
         }
     }
 
+    public void addAuthor(Author author){
+        if (author == null){
+            return;
+        }
+
+        if (!authors.contains(author)){
+            authors.add(author);
+        }
+
+        if (!author.getBooks().contains(this)){
+            author.addBook(this);
+        }
+    }
+
     public void addLoan(Loan loan){
         if(!loans.contains(loan)){
             loans.add(loan);

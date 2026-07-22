@@ -37,4 +37,9 @@ public class BookController {
         return bookService.searchByCategory(categoria);
     }
 
+    @GetMapping("/autor/{autor}")
+    public List<BookDTO> searchByAuthor(@PathVariable String autor){
+        return bookService.searchByAuthor(autor);
+    }
+
 }

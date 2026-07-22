@@ -1,9 +1,9 @@
 package com.alura.projeto.Biblioteca_Inteligente2.HandlingExceptions;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record ErrorResponse(
-        LocalDate horaDoErro,
+        LocalDateTime momentoDoErro,
         int status,
         String erro,
         String mensage,

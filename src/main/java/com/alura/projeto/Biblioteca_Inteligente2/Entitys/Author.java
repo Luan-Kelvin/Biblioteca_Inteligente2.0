@@ -29,7 +29,8 @@ public class Author {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "livro_and_author",
+            name = "book_and_author",
+            schema = "smartlibrary",
             joinColumns = @JoinColumn(name = "id_author"),
             inverseJoinColumns = @JoinColumn(name = "id_book")
     )
@@ -47,8 +48,12 @@ public class Author {
             return;
         }
 
-        if (books.add(book)){
-            book.getAuthors().add(this);
+        if (!books.contains(book)){
+            books.add(book);
+        }
+
+        if (!book.getAuthors().contains(this)){
+            book.addAuthor(this);
         }
     }
 }
